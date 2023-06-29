@@ -24,4 +24,6 @@ export default {
     width: 879px;
     margin: auto;
   }
+  html { height: 100%; overflow:auto; }
+  body { height: 100%; }
 </style>
