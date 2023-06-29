@@ -21,6 +21,8 @@ import Comments  from '../components/Comments.vue';
   <style scoped>
   .main {
     margin-top: 55px;
+    margin-bottom: 33px;
+    background: #FFF;
   }
   .title {
     color: #000;

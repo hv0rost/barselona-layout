@@ -64,6 +64,7 @@
   }
   .dots {
     display: flex;
+    align-items: center;
   }
   .dot{
     height: 3px;
@@ -99,7 +100,6 @@
     display: flex;
     justify-content: space-between;
     margin-top: 43px;
-
   }
   </style>
   
