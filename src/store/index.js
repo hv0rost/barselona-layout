@@ -49,6 +49,18 @@ const store = createStore({
     getMessages (state) {
       return state.messages
     }
+  },
+  mutations : {
+    setMessages (state, payload) {
+      if (payload.role === 'admin') {
+        payload.pic = adminPic
+      }
+      else {
+        payload.pic = userPic
+      }
+      console.log(payload)
+      state.messages.push(payload)
+    }
   }
 })
 

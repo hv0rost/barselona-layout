@@ -4,7 +4,7 @@
     <div class="chatBody">
 
       <div class="chatHeader">
-        <img class="profilePic" src="../assets/Oval_2.svg" alt="ProfilePic">
+        <div class="profilePic" :class="{adminPic : role !== 'admin', userPic : role !== 'user'}"></div>
         <div>
           <div>{{ name }}</div>
           <div class="subtitle">
@@ -17,7 +17,7 @@
 
       <div class="messages">
         <div class="message" :class="{user : message.role === 'user'}" v-for="message in messages" :key="message">
-          <img class="profilePic" :src="message.pic" alt="ProfilePic">
+          <img style="margin-right: 0"  class="profilePic" :src="message.pic" alt="ProfilePic">
           <div style="margin-left: 19px;">
             <div class="messageText"> {{ message.text }}</div>
             <div class="messageDate"> {{ message.date }}</div>
@@ -26,8 +26,8 @@
       </div>
 
       <div class="chatFooter">
-        <img style="padding-left: 0;" class="profilePic" src="../assets/Oval_2.1.svg" alt="ProfilePic">
-        <input class="textField" v-model="message" type="text" placeholder="Напишите сообщение...">
+        <div style="padding-left: 0; margin: 0" class="profilePic" :class="{adminPic : role === 'admin', userPic : role === 'user'}"></div>
+        <input class="textField" v-model="message" type="text" v-on:keyup.enter="sendMessage" placeholder="Напишите сообщение...">
         <img class="send" src="../assets/send.svg" alt="Send" @click="sendMessage">
       </div>
     </div>
@@ -36,6 +36,7 @@
 </template>
 
 <script>
+
 export default{
     name : 'ChatComponent',
     props : ['name', 'subtitle', 'role'],
@@ -51,8 +52,15 @@ export default{
     },
     methods : {
       sendMessage() {
-        console.log(this.message);
-        this.message = ''
+        const date = new Date();
+        const message = {
+          pic : '',
+          text: this.message,
+          date : 'Сегодня в ' + date.getHours() + ':' + date.getMinutes(),
+          role : this.role
+        };
+        this.$store.commit('setMessages', message);
+        this.message = '';
       }
     }
 }
@@ -89,8 +97,8 @@ export default{
 .profilePic {
   width: 44px;
   height: 44px;
-  padding-left: 27px;
-  padding-right: 19px;
+  margin-left: 27px;
+  margin-right: 19px;
 }
 .subtitle {
   display: flex;
@@ -103,7 +111,7 @@ export default{
   align-items: center;
 }
 .rating {
-  width: 75.75px; 
+  width: 76px;
   height: 12px; 
 }
 .chatFooter {
@@ -113,12 +121,13 @@ export default{
   border-top: 1px solid #ECECEC;;
 }
 .textField {
-  width: 270px;
+  width: 245px;
   height: 49px;
   border: 1px solid #ECECEC;
   background: #FFF;
   margin-left: 19px;
   margin-right: 15px;
+  padding-left: 10px;
 
   color: #A3A2A2;
   font-size: 15px;
@@ -127,7 +136,6 @@ export default{
   font-style: normal;
   line-height: 24px;
   text-align: start;
-  padding-left: 15px;
 }
 .textField:focus {
   outline: none;
@@ -181,5 +189,11 @@ export default{
 }
 .send:hover {
   cursor: pointer;
+}
+.adminPic {
+  background: no-repeat url("../assets/Oval_2.1.svg") ;
+}
+.userPic {
+  background: no-repeat url("../assets/Oval_2.svg") ;
 }
 </style>

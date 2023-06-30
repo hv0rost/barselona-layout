@@ -38,7 +38,6 @@ export default{
 .dialog_content{
     margin: auto;
     border-radius: 12px;
-    background: rgb(255, 255, 255);
     padding: 20px;
     background: #fff;
 }
